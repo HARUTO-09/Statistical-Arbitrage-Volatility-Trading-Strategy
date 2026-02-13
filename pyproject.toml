@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stat-arb-vol"
+version = "0.1.0"
+description = "Statistical arbitrage and volatility trading research framework"
+requires-python = ">=3.10"
+dependencies = [
+  "pandas",
+  "numpy",
+  "statsmodels",
+  "scipy",
+  "matplotlib",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

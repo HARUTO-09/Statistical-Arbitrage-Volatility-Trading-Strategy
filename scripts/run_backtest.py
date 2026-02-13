@@ -48,7 +48,8 @@ def main(use_mock_only: bool = False) -> None:
         raise RuntimeError("No cointegrated pairs found. Try mock mode or broader universe.")
 
     pair = (candidates[0].asset_x, candidates[0].asset_y)
-    backtester = EventDrivenBacktester(test, pair, config)
+    hedge_ratio, _ = estimate_spread_params(train, pair)
+    backtester = EventDrivenBacktester(test, pair, config, hedge_ratio=hedge_ratio)
     result = backtester.run()
     metrics = compute_metrics(result.equity_curve, result.trade_returns, annualization=config.annualization)
 

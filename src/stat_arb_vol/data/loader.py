@@ -68,14 +68,14 @@ class DataLoader:
     def _simulate_prices(self, seed: int = 7) -> pd.DataFrame:
         rng = np.random.default_rng(seed)
         dates = pd.date_range(self.start_date, self.end_date, freq="D")
-        latent = rng.normal(0, 0.01, len(dates)).cumsum()
+        latent = rng.normal(0, 0.015, len(dates)).cumsum()
         out = {}
 
         for i, symbol in enumerate(self.symbols):
-            drift = 0.0002 + i * 0.00003
-            vol = 0.02 + i * 0.002
+            drift = 0.0001 + i * 0.00002
+            vol = 0.008 + i * 0.0005
             idio = rng.normal(0, vol, len(dates)).cumsum()
-            log_price = np.log(100 + i * 20) + drift * np.arange(len(dates)) + latent + 0.3 * idio
+            log_price = np.log(100 + i * 20) + drift * np.arange(len(dates)) + 0.95 * latent + 0.05 * idio
             out[symbol] = np.exp(log_price)
 
         return pd.DataFrame(out, index=dates)

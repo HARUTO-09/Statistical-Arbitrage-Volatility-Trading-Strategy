@@ -1,0 +1,15 @@
+{
+  "selected_pair": [
+    "XRP",
+    "BNB"
+  ],
+  "hedge_ratio": 0.7871668279352165,
+  "metrics": {
+    "Sharpe Ratio": 0.0072043877619516385,
+    "Maximum Drawdown": 0.24476972648122158,
+    "CAGR": -0.021484299790953787,
+    "Win Rate": 0.5454545454545454
+  },
+  "target_sharpe_ratio": 2.1,
+  "target_achieved": false
+}

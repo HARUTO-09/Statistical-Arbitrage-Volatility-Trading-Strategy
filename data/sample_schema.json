@@ -1,0 +1,29 @@
+{
+  "index": "datetime64[ns] daily",
+  "columns": [
+    {
+      "symbol": "BTC",
+      "type": "float close price"
+    },
+    {
+      "symbol": "ETH",
+      "type": "float close price"
+    },
+    {
+      "symbol": "LTC",
+      "type": "float close price"
+    },
+    {
+      "symbol": "XRP",
+      "type": "float close price"
+    },
+    {
+      "symbol": "BNB",
+      "type": "float close price"
+    },
+    {
+      "symbol": "SOL",
+      "type": "float close price"
+    }
+  ]
+}

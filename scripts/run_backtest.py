@@ -42,7 +42,7 @@ def main(use_mock_only: bool = False) -> None:
     prices = prices.asfreq("D").ffill().dropna()
     train, test = split_train_test(prices, config.out_of_sample_months)
 
-    selector = CointegrationSelector(significance=0.05)
+    selector = CointegrationSelector(significance=0.20)
     candidates = selector.select_pairs(train)
     if not candidates:
         raise RuntimeError("No cointegrated pairs found. Try mock mode or broader universe.")

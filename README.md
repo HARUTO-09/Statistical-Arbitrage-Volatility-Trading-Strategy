@@ -43,7 +43,7 @@ Research-grade, modular Python implementation for **pairs trading/statistical ar
 - **Backtesting:** Event-driven flow with latency, transaction costs, and variable slippage.
 - **Risk Management:** Kelly sizing with drawdown-based exposure throttling.
 - **Evaluation:** Out-of-sample backtest metrics (Sharpe, max drawdown, CAGR, win rate).
-- **Web App:** Lightweight dashboard to view generated artifacts.
+- **Web App:** Modern interactive dashboard with performance cards, equity visualization, and artifact drill-down links.
 
 ## Setup
 
@@ -68,7 +68,7 @@ Mock-only mode:
 python scripts/run_backtest.py --mock-only
 ```
 
-## Launch Local Web Dashboard
+## Launch Interactive Web Dashboard
 
 ```bash
 python -m stat_arb_vol.web.app

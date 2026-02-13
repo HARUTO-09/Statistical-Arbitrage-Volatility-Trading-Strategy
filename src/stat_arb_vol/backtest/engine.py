@@ -24,7 +24,13 @@ class BacktestResult:
 
 
 class EventDrivenBacktester:
-    def __init__(self, prices: pd.DataFrame, pair: tuple[str, str], config: BacktestConfig) -> None:
+    def __init__(
+        self,
+        prices: pd.DataFrame,
+        pair: tuple[str, str],
+        config: BacktestConfig,
+        hedge_ratio: float | None = None,
+    ) -> None:
         self.prices = prices
         self.pair = pair
         self.config = config
@@ -32,7 +38,7 @@ class EventDrivenBacktester:
         self.trade_returns: list[float] = []
         self._entry_equity = None
 
-        self.hedge_ratio = self._estimate_hedge_ratio()
+        self.hedge_ratio = float(hedge_ratio) if hedge_ratio is not None else self._estimate_hedge_ratio()
         self.strategy = PairsOUStrategy(prices=prices, pair=pair, hedge_ratio=self.hedge_ratio, config=config)
 
     def _estimate_hedge_ratio(self) -> float:
@@ -58,12 +64,10 @@ class EventDrivenBacktester:
 
         for i, ts in enumerate(idx[1:], start=1):
             prev_ts = idx[i - 1]
-            ret_x = self.prices.loc[ts, x] / self.prices.loc[prev_ts, x] - 1
-            ret_y = self.prices.loc[ts, y] / self.prices.loc[prev_ts, y] - 1
-            pair_ret = ret_x - self.hedge_ratio * ret_y
-
-            pnl = position_side * current_qty * pair_ret
-            cash *= 1 + pnl
+            delta_x = self.prices.loc[ts, x] - self.prices.loc[prev_ts, x]
+            delta_y = self.prices.loc[ts, y] - self.prices.loc[prev_ts, y]
+            pnl_dollars = position_side * current_qty * (delta_x - self.hedge_ratio * delta_y)
+            cash += pnl_dollars
 
             if pending_order and (i - pending_submit_time) >= self.config.latency_bars:
                 fill = self._execute_order(pending_order, ts)
